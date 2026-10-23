@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estatística para compreender a realidade — ODS 18 · CEFET-MG</title>
+<meta name="description" content="Investigação estatística sobre desigualdades educacionais entre pessoas brancas e pretas ou pardas no Brasil (PNAD Contínua Educação 2025, IBGE), com o ciclo PPDAC e o ODS 18 — CEFET-MG, Estatística, 2026.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Special+Elite&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Barra de progresso de leitura -->
+<div id="progress" role="presentation"></div>
+
+<!-- Navbar topo -->
+<nav class="navbar" aria-label="Seções do documento" id="navbar">
+  <div class="navbar__inner">
+    <a href="#hero" class="navbar__brand">
+      <span class="navbar__brand-title">Estatística</span>
+      <span class="navbar__brand-sub">ODS 18</span>
+    </a>
+    <div class="navbar__links" id="navLinks">
+      <a href="#mapa" class="nav-link">Mapa</a>
+      <a href="#contexto" class="nav-link">Contexto</a>
+      <a href="#problema" class="nav-link">Problema</a>
+      <a href="#plano" class="nav-link">Plano</a>
+      <a href="#alfabetizacao" class="nav-link">Alfabetização</a>
+      <a href="#escolaridade" class="nav-link">Escolaridade</a>
+      <a href="#abandono" class="nav-link">Abandono</a>
+      <a href="#medidas" class="nav-link">Medidas</a>
+      <a href="#sintese" class="nav-link">Síntese</a>
+      <a href="#qualidade" class="nav-link">Qualidade</a>
+      <a href="#conclusoes" class="nav-link">Conclusões</a>
+      <a href="#intervencao" class="nav-link">Intervenção</a>
+      <a href="#referencias" class="nav-link">Referências</a>
+    </div>
+    <button class="navbar__burger" id="navBurger" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Menu mobile overlay -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <button class="mobile-menu__close" id="mobileClose" aria-label="Fechar menu">✕</button>
+  <nav>
+    <a href="#mapa" class="mobile-menu__link">Mapa do trabalho</a>
+    <a href="#contexto" class="mobile-menu__link">01 — Contexto</a>
+    <a href="#problema" class="mobile-menu__link">02 — Problema e objetivos</a>
+    <a href="#plano" class="mobile-menu__link">03 — Plano e dados</a>
+    <a href="#alfabetizacao" class="mobile-menu__link">04 — Alfabetização</a>
+    <a href="#escolaridade" class="mobile-menu__link">05 — Escolaridade</a>
+    <a href="#abandono" class="mobile-menu__link">06 — Abandono escolar</a>
+    <a href="#medidas" class="mobile-menu__link">07 — Medidas estatísticas</a>
+    <a href="#sintese" class="mobile-menu__link">08 — Síntese das diferenças</a>
+    <a href="#qualidade" class="mobile-menu__link">09 — Qualidade das fontes</a>
+    <a href="#conclusoes" class="mobile-menu__link">10 — Conclusões</a>
+    <a href="#intervencao" class="mobile-menu__link">11 — Proposta de intervenção</a>
+    <a href="#referencias" class="mobile-menu__link">12 — Referências</a>
+  </nav>
+</div>
+
+<main>
+
+<!-- ══════════════════════ HERO ══════════════════════ -->
+<section id="hero" class="section hero">
+  <div class="hero__inner">
+    <div class="hero__text">
+      <p class="eyebrow reveal">CEFET-MG · Estatística · Professores Erica e Luiz Gustavo · Belo Horizonte, 2026</p>
+      <h1 class="hero-title reveal">ESTATÍS<br><em>TICA</em></h1>
+      <p class="hero__sub reveal">Educação e relações étnico-raciais: uma investigação estatística sobre desigualdades educacionais no Brasil. Ciclo PPDAC e ODS 18 — Igualdade Étnico-Racial.</p>
+      <p class="note-faint reveal" id="integrantes">[Nome do(a) integrante 1], [Nome do(a) integrante 2], [Nome do(a) integrante 3], [Nome do(a) integrante 4], [Nome do(a) integrante 5]</p>
+      <div class="hero__meta reveal">
+        <div class="hero__meta-item">
+          <span class="hero__meta-label">PRETA OU PARDA</span>
+          <span class="hero__meta-val">55,5%</span>
+        </div>
+        <div class="hero__meta-divider"></div>
+        <div class="hero__meta-item">
+          <span class="hero__meta-label">ANALFAB. 15+</span>
+          <span class="hero__meta-val">2,3×</span>
+        </div>
+        <div class="hero__meta-divider"></div>
+        <div class="hero__meta-item">
+          <span class="hero__meta-label">ABANDONO</span>
+          <span class="hero__meta-val">72,8%</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero__graph reveal">
+      <div class="chart-frame">
+        <div class="chart-frame__tag">ensino médio · 15–17 anos (%)</div>
+        <div id="plotHero" class="chart-frame__plot h-300"></div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue reveal">
+    <span>rolar para iniciar</span>
+    <div class="scroll-cue__arrow"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════ MAPA DO TRABALHO ══════════════════════ -->
+<section id="mapa" class="section section--alt">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="eyebrow">Como ler este site</p>
+      <h2 class="section-title">Mapa do trabalho:<br>as fases exigidas e onde estão.</h2>
+    </div>
+    <p class="lede reveal">O site segue as fases pedidas nas orientações do trabalho. Cada cartão mostra o que a fase exige e leva à seção correspondente. Os gráficos são interativos: passe o cursor (ou toque) para ver os valores; cada um tem uma caixa "Em palavras simples" e uma tabela com os dados exatos.</p>
+    <div class="phase-grid reveal">
+      <div class="phase-card">
+        <p class="phase-card__num">1</p><h3>Introdução e Problema</h3>
+        <ul><li>Pergunta de pesquisa e sua relevância</li><li>Relação com o tema e com o ODS 18</li><li>Motivação para a escolha do problema</li><li>Contextualização com fontes oficiais</li></ul>
+        <p class="phase-card__links"><a href="#contexto">Contexto</a><a href="#problema">Problema</a></p>
+      </div>
+      <div class="phase-card phase-card--alt">
+        <p class="phase-card__num">2</p><h3>Plano e Dados</h3>
+        <ul><li>Metodologia (ciclo PPDAC)</li><li>Fontes de dados e quem as indicou</li><li>Pesquisa própria: não realizada</li><li>Organização, tratamento e ferramentas</li></ul>
+        <p class="phase-card__links"><a href="#plano">Plano e dados</a></p>
+      </div>
+      <div class="phase-card">
+        <p class="phase-card__num">3</p><h3>Análise dos Dados</h3>
+        <ul><li>Tabelas e gráficos adequados às variáveis</li><li>Média, mediana, moda, amplitude, variância e desvio-padrão</li><li>Padrões, tendências e diferenças</li><li>Qualidade das fontes e limitações</li></ul>
+        <p class="phase-card__links"><a href="#alfabetizacao">Alfabetização</a><a href="#escolaridade">Escolaridade</a><a href="#abandono">Abandono</a><a href="#medidas">Medidas</a><a href="#sintese">Síntese</a><a href="#qualidade">Qualidade</a></p>
+      </div>
+      <div class="phase-card phase-card--alt">
+        <p class="phase-card__num">4</p><h3>Conclusões e Reflexão Crítica</h3>
+        <ul><li>Resposta à pergunta de pesquisa</li><li>Relação com o ODS 18 e implicações sociais</li><li>Limitações e interpretações alternativas</li><li>Proposta de intervenção</li></ul>
+        <p class="phase-card__links"><a href="#conclusoes">Conclusões</a><a href="#intervencao">Intervenção</a></p>
+      </div>
+      <div class="phase-card">
+        <p class="phase-card__num">5</p><h3>Referências e organização</h3>
+        <ul><li>Referências em ABNT</li><li>Fonte indicada em cada gráfico e tabela</li><li>Registro da participação individual</li></ul>
+        <p class="phase-card__links"><a href="#referencias">Referências</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ 01 CONTEXTO ══════════════════════ -->
+<section id="contexto" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="phase-tag">Fase 1 · Introdução e Problema</span>
+      <p class="eyebrow">01 — Introdução e contexto</p>
+      <h2 class="section-title">A maioria da população é negra,<br>mas os resultados não refletem isso.</h2>
+    </div>
+    <p class="lede reveal">Segundo o Censo Demográfico 2022, 55,5% da população brasileira se declara preta ou parda: os pardos são 45,3% (92,1 milhões de pessoas) e os pretos, 10,2% (20,6 milhões), enquanto os brancos somam 43,5% (IBGE, 2023).</p>
+    <p class="body-text reveal">Pela primeira vez desde 1991, os pardos superaram os brancos em número. Ou seja, a população negra (soma de pretos e pardos, conforme o critério do IBGE) é a maioria do país. Seria de esperar, portanto, que ela estivesse igualmente representada nos resultados da educação. Os dados mostram que não é isso que acontece.</p>
+
+    <div class="chart-frame reveal">
+      <p class="chart-frame__title">Composição da população por cor ou raça — Censo 2022 (%)</p>
+      <div class="chart-frame__hint">passe o cursor sobre uma fatia · clique para destacá-la</div>
+      <div id="plotCenso" class="h-340"></div>
+      <p class="chart-frame__caption" id="cap-censo">Pretos e pardos somam 55,5%; brancos, 43,5%.</p>
+      <div class="plain"><span class="plain__tag">Em palavras simples</span><p>Em cada 100 brasileiros, 55,5 se declaram pretos ou pardos e 43,5 se declaram brancos. Ou seja: a população negra é a maioria do país.</p></div>
+      <p class="chart-frame__source">Fonte: Elaborada pelos autores com base nos dados do IBGE (2023).</p>
+      <div class="data-slot" data-slot="censo"></div>
+    </div>
+
+    <p class="body-text reveal">A educação é um dos principais caminhos para reduzir desigualdades e ampliar oportunidades. O Brasil criou instrumentos legais para enfrentar desigualdades raciais nesse campo, mas, para Almeida (2019), o racismo é estrutural: ele opera nas instituições e nas condições de vida, e não apenas em atitudes individuais, o que ajuda a explicar por que as diferenças se mantêm mesmo após avanços legais.</p>
+
+    <div class="glossary reveal">
+      <div class="glossary__item">
+        <span class="glossary__tag">2003</span>
+        <div class="glossary__content">
+          <h3>Lei nº 10.639/2003</h3>
+          <p>Tornou obrigatório o ensino de história e cultura afro-brasileira (BRASIL, 2003).</p>
+        </div>
+      </div>
+      <div class="glossary__item">
+        <span class="glossary__tag glossary__tag--b">2012</span>
+        <div class="glossary__content">
+          <h3>Lei nº 12.711/2012 — Lei de Cotas</h3>
+          <p>Reserva vagas em instituições federais de ensino para estudantes pretos, pardos, indígenas, de escola pública e de baixa renda (BRASIL, 2012).</p>
+        </div>
+      </div>
+      <div class="glossary__item">
+        <span class="glossary__tag glossary__tag--c">2023</span>
+        <div class="glossary__content">
+          <h3>Lei nº 14.723/2023</h3>
+          <p>Atualizou a Lei de Cotas (BRASIL, 2023).</p>
+        </div>
+      </div>
+      <div class="glossary__item">
+        <span class="glossary__tag glossary__tag--d">18</span>
+        <div class="glossary__content">
+          <h3>ODS 18 — Igualdade Étnico-Racial</h3>
+          <p>Iniciativa voluntária do Brasil, anunciada pelo presidente da República na abertura da Assembleia Geral da ONU em setembro de 2023, para colocar o combate ao racismo no centro da Agenda 2030. É conduzida por uma câmara temática da CNODS e pelo Ministério da Igualdade Racial, que coordena um grupo de trabalho para elaborar metas e indicadores até 2030 (BRASIL, 2024; PNUD, [s.d.]).</p>
+        </div>
+      </div>
+    </div>
+    <p class="note-faint reveal" style="margin-top:var(--space-md)">Como o ODS 18 depende de indicadores mensuráveis, a estatística é uma ferramenta central para saber se o país está, de fato, reduzindo as desigualdades. Este trabalho utiliza indicadores educacionais oficiais para esse fim.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════ 02 PROBLEMA ══════════════════════ -->
+<section id="problema" class="section section--alt">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="phase-tag">Fase 1 · Introdução e Problema</span>
+      <p class="eyebrow">02 — Problema</p>
+      <h2 class="section-title">Qual é o tamanho da<br>desigualdade educacional?</h2>
+    </div>
+
+    <div class="callout reveal">
+      <p class="callout__label">Pergunta de pesquisa</p>
+      <p class="callout__text">Em 2025, como se comparam pessoas brancas e pessoas pretas ou pardas nos principais indicadores educacionais do IBGE (alfabetização, anos de estudo, conclusão da educação básica, frequência ao ensino médio, acesso ao ensino superior e abandono escolar) e como essas diferenças evoluíram desde 2016?</p>
+    </div>
+    <p class="body-text reveal"><strong>Hipótese:</strong> as desigualdades diminuíram desde 2016, mas continuam expressivas em todos os indicadores.</p>
+    <p class="body-text reveal"><strong>Objetivo geral:</strong> descrever e interpretar, com base em dados oficiais, as desigualdades educacionais entre os grupos de cor ou raça no Brasil.</p>
+
+    <p class="eyebrow reveal" style="margin-top:var(--space-lg)">Objetivos específicos</p>
+    <div class="steps reveal">
+      <div class="step"><span class="step__num">1</span><div class="step__content">Comparar as taxas de analfabetismo de brancos e de pretos ou pardos entre 2016 e 2025.</div></div>
+      <div class="step"><span class="step__num">2</span><div class="step__content">Comparar escolaridade (anos de estudo e conclusão da educação básica) e frequência ao ensino médio e ao ensino superior.</div></div>
+      <div class="step"><span class="step__num">3</span><div class="step__content">Medir o tamanho das diferenças por meio de diferença em pontos percentuais (p.p.) e razão entre as taxas.</div></div>
+      <div class="step"><span class="step__num">4</span><div class="step__content">Calcular medidas de tendência central e de dispersão das séries históricas.</div></div>
+      <div class="step step--result"><span class="step__num">5</span><div class="step__content">Propor ações de intervenção para a escola e a comunidade, baseadas nos dados.</div></div>
+    </div>
+
+    <p class="body-text reveal"><strong>Motivação.</strong> O grupo escolheu o tema porque a desigualdade educacional é visível no cotidiano escolar e tem efeitos duradouros sobre o acesso ao ensino superior e ao trabalho. A escolha também permite relacionar o conteúdo de Estatística com um problema social atual, usando dados oficiais e verificáveis.</p>
+
+    <p class="eyebrow reveal" style="margin-top:var(--space-lg)">O ciclo PPDAC deste trabalho</p>
+    <div class="toggle-group reveal" role="tablist" id="ppdacTabs">
+      <button class="toggle-btn is-active" data-step="p1">Problema</button>
+      <button class="toggle-btn" data-step="plano">Plano</button>
+      <button class="toggle-btn" data-step="dados">Dados</button>
+      <button class="toggle-btn" data-step="analise">Análise</button>
+      <button class="toggle-btn" data-step="concl">Conclusões</button>
+    </div>
+    <div class="eq-block reveal"><p id="ppdacText" class="ppdac-text"></p></div>
+  </div>
+</section>
+
+<!-- ══════════════════════ 03 PLANO E DADOS ══════════════════════ -->
+<section id="plano" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="phase-tag">Fase 2 · Plano e Dados</span>
+      <p class="eyebrow">03 — Plano e dados</p>
+      <h2 class="section-title">Fontes oficiais, variáveis<br>e tratamento dos dados.</h2>
+    </div>
+    <p class="lede reveal"><strong>Metodologia.</strong> Trata-se de uma investigação quantitativa e descritiva, baseada em dados secundários de fontes oficiais, que seguiu o ciclo PPDAC: Problema, Plano, Dados, Análise e Conclusões.</p>
+
+    <div class="glossary reveal">
+      <div class="glossary__item">
+        <span class="glossary__tag">PNAD</span>
+        <div class="glossary__content">
+          <h3>PNAD Contínua — Educação 2025</h3>
+          <p>Fonte principal (IBGE, 2026), sugerida pelo professor (tema 2: Painel Cor ou Raça). É a pesquisa que alimenta os indicadores educacionais por cor ou raça do Painel Cor ou Raça (IBGE, 2024). Os valores foram transcritos do Informativo oficial, que traz a série de 2016 a 2025.</p>
+        </div>
+      </div>
+      <div class="glossary__item">
+        <span class="glossary__tag glossary__tag--b">Censo</span>
+        <div class="glossary__content">
+          <h3>Censo Demográfico 2022</h3>
+          <p>Usado para a composição da população por cor ou raça (IBGE, 2023).</p>
+        </div>
+      </div>
+      <div class="glossary__item">
+        <span class="glossary__tag glossary__tag--c">Ctx</span>
+        <div class="glossary__content">
+          <h3>Fontes complementares</h3>
+          <p>Documentos oficiais sobre o ODS 18 (BRASIL, 2024; PNUD, [s.d.]), legislação federal e matérias que divulgam os resultados da PNAD (AGÊNCIA GOV, 2026; JEDUCA, 2026), usadas apenas para conferir os números.</p>
+        </div>
+      </div>
+      <div class="glossary__item">
+        <span class="glossary__tag glossary__tag--d">±</span>
+        <div class="glossary__content">
+          <h3>Características da PNAD Contínua</h3>
+          <p>Amostra probabilística de domicílios, coletada no segundo trimestre de cada ano para o módulo de Educação. A cor ou raça é autodeclarada. A série 2016–2025 foi reponderada com base no Censo 2022, e por isso alguns valores podem diferir de divulgações antigas. Os anos 2020 e 2021 não têm dados do módulo por causa da pandemia (IBGE, 2026).</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="eyebrow reveal" style="margin-top:var(--space-lg)">Variáveis analisadas</p>
+    <div class="table-wrap reveal">
+      <table class="data-table">
+        <thead><tr><th>Variável</th><th>Tipo</th><th>Medida / população</th></tr></thead>
+        <tbody>
+          <tr><td>Cor ou raça (branca; preta ou parda)</td><td>Qualitativa nominal</td><td>Autodeclaração (IBGE)</td></tr>
+          <tr><td>Taxa de analfabetismo</td><td>Quantitativa contínua</td><td>% de pessoas de 15 anos ou mais e de 60 anos ou mais</td></tr>
+          <tr><td>Anos de estudo</td><td>Quantitativa contínua</td><td>Média, pessoas de 25 anos ou mais</td></tr>
+          <tr><td>Educação básica completa</td><td>Quantitativa contínua</td><td>% de pessoas de 25 anos ou mais</td></tr>
+          <tr><td>Frequência escolar líquida, ensino médio</td><td>Quantitativa contínua</td><td>% de jovens de 15 a 17 anos</td></tr>
+          <tr><td>Situação escolar de 18 a 24 anos</td><td>Qualitativa ordinal (categorias)</td><td>% por categoria</td></tr>
+          <tr><td>Abandono escolar e condição de estudo/ocupação</td><td>Qualitativa (categorias)</td><td>Pessoas de 14 a 29 anos e de 15 a 29 anos</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="chart-frame__source reveal" style="border:0;padding-left:0">Fonte: Elaborada pelos autores (2026).</p>
+
+    <p class="body-text reveal"><strong>Organização, tratamento e ferramentas.</strong> Os dados foram organizados em planilha (formato longo: indicador, ano, grupo de cor ou raça, valor, fonte). Foram conferidas as somas das categorias (por exemplo, a distribuição dos jovens de 18 a 24 anos soma 100% em cada grupo) e a consistência entre a série e os totais nacionais. Foram calculados: média, mediana, moda, amplitude, variância e desvio-padrão (amostrais), coeficiente de variação (CV), diferença em pontos percentuais e razão entre os grupos. Os cálculos e gráficos foram feitos com Python (pandas e matplotlib) e conferidos em planilha eletrônica; os gráficos interativos deste site foram reconstruídos em Plotly a partir dos mesmos valores.</p>
+    <p class="note-faint reveal">Não houve pesquisa própria: não foram coletados dados pessoais, e todos os dados utilizados são públicos e agregados, o que dispensa cuidados adicionais de anonimato.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════ 04 ALFABETIZAÇÃO ══════════════════════ -->
+<section id="alfabetizacao" class="section section--alt">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="phase-tag">Fase 3 · Análise dos Dados</span>
+      <p class="eyebrow">04 — Alfabetização</p>
+      <h2 class="section-title">O analfabetismo caiu, mas a razão<br>entre os grupos quase não mudou.</h2>
+    </div>
+    <p class="lede reveal">Em 2025, o Brasil tinha 8,4 milhões de pessoas analfabetas com 15 anos ou mais (taxa de 4,9%), a menor da série iniciada em 2016. Entre as pessoas brancas, a taxa foi de 2,8%; entre as pretas ou pardas, 6,5% (IBGE, 2026). A taxa dos pretos ou pardos é, portanto, 2,3 vezes a dos brancos.</p>
+
+    <div class="stat-grid reveal">
+      <div class="stat-card"><p class="stat-card__value">2,3×</p><p class="stat-card__label">taxa de pretos ou pardos vs. brancos, 15 anos ou mais (2025)</p></div>
+      <div class="stat-card stat-card--alt"><p class="stat-card__value">2,8×</p><p class="stat-card__label">razão entre os idosos (60 anos ou mais, 2025)</p></div>
+      <div class="stat-card"><p class="stat-card__value">8,4 mi</p><p class="stat-card__label">pessoas analfabetas de 15 anos ou mais; taxa de 4,9%, a menor da série</p></div>
+    </div>
+
+    <div class="chart-frame reveal">
+      <p class="chart-frame__title">Gráfico 1 — Taxa de analfabetismo, 15 anos ou mais, por cor ou raça (%)</p>
+      <div class="chart-controls" role="group" aria-label="Visualização do gráfico 1">
+        <button class="mode-btn is-active" data-chart="analf15" data-mode="taxa" aria-pressed="true">Taxas</button>
+        <button class="mode-btn" data-chart="analf15" data-mode="dif" aria-pressed="false">Diferença (p.p.)</button>
+        <button class="mode-btn" data-chart="analf15" data-mode="razao" aria-pressed="false">Razão</button>
+      </div>
+      <div id="plotAnalf15" class="h-340"></div>
+      <p class="chart-frame__caption" id="cap-analf15"></p>
+      <div class="plain"><span class="plain__tag">Em palavras simples</span><p><strong>p.p.</strong> significa <em>ponto percentual</em>: a diferença entre duas porcentagens. Em 2025, de cada 100 pessoas brancas com 15 anos ou mais, 2,8 eram analfabetas; entre pretas ou pardas, eram 6,5. A taxa caiu para todos, mas a proporção entre os grupos (2,3 vezes) quase não mudou.</p></div>
+      <p class="chart-frame__source">Fonte: Elaborada pelos autores com base nos dados do IBGE (2026).</p>
+      <div class="data-slot" data-slot="analf15"></div>
+    </div>
+    <p class="body-text reveal"><strong>Interpretação.</strong> A taxa de pretos ou pardos caiu 2,7 p.p. entre 2016 e 2025 (de 9,2% para 6,5%, queda relativa de cerca de 29%), e a de brancos caiu 1,0 p.p. (de 3,8% para 2,8%, cerca de 26%). A diferença absoluta diminuiu de 5,4 p.p. para 3,7 p.p. Já a razão entre os grupos ficou praticamente estável, entre 2,2 e 2,5 ao longo da série (2,42 em 2016 e 2,32 em 2025). Isso indica que, em termos relativos, a distância quase não mudou: o analfabetismo caiu para todos, mas pretos e pardos continuam com mais que o dobro da taxa dos brancos.</p>
+
+    <div class="chart-frame reveal">
+      <p class="chart-frame__title">Gráfico 2 — Taxa de analfabetismo, 60 anos ou mais, por cor ou raça (%)</p>
+      <div class="chart-controls" role="group" aria-label="Visualização do gráfico 2">
+        <button class="mode-btn is-active" data-chart="analf60" data-mode="taxa" aria-pressed="true">Taxas</button>
+        <button class="mode-btn" data-chart="analf60" data-mode="dif" aria-pressed="false">Diferença (p.p.)</button>
+        <button class="mode-btn" data-chart="analf60" data-mode="razao" aria-pressed="false">Razão</button>
+      </div>
+      <div id="plotAnalf60" class="h-340"></div>
+      <p class="chart-frame__caption" id="cap-analf60"></p>
+      <div class="plain"><span class="plain__tag">Em palavras simples</span><p>Entre pessoas com 60 anos ou mais, 20,6 em cada 100 pretas ou pardas eram analfabetas em 2025, contra 7,3 em cada 100 brancas. A desigualdade é maior nas gerações que tiveram menos acesso à escola.</p></div>
+      <p class="chart-frame__source">Fonte: Elaborada pelos autores com base nos dados do IBGE (2026).</p>
+      <div class="data-slot" data-slot="analf60"></div>
+    </div>
+    <p class="body-text reveal"><strong>Interpretação.</strong> Entre os idosos a desigualdade é maior: 20,6% das pessoas pretas ou pardas de 60 anos ou mais são analfabetas, contra 7,3% das brancas, quase três vezes mais (razão de 2,82). A diferença absoluta é de 13,3 p.p., embora tenha caído de 19,0 p.p. em 2016. Esse resultado reflete o acesso desigual à escola nas gerações anteriores, o que o IBGE descreve como legado estrutural de exclusão educacional (IBGE, 2026). A taxa de 15 a 59 anos é de apenas 2,6% no total do país, o que indica que as novas gerações têm mais acesso à alfabetização.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════ 05 ESCOLARIDADE ══════════════════════ -->
+<section id="escolaridade" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="phase-tag">Fase 3 · Análise dos Dados</span>
+      <p class="eyebrow">05 — Escolaridade</p>
+      <h2 class="section-title">Da educação básica ao ensino superior:<br>a lacuna diminui, mas persiste.</h2>
+    </div>
+
+    <!-- 5.1 adultos -->
+    <p class="eyebrow eyebrow--sub reveal">05.1 — Adultos (25 anos ou mais)</p>
+    <h3 class="subsection-title reveal">Escolaridade e conclusão de etapas</h3>
+    <p class="lede reveal">Em 2025, pessoas brancas de 25 anos ou mais tinham em média 11,1 anos de estudo; pretas ou pardas, 9,5 anos, uma diferença de 1,6 ano (em 2016, eram 10,1 e 8,1 anos, diferença de 2,0 anos).</p>
+
+    <div class="stat-grid reveal">
+      <div class="stat-card"><p class="stat-card__value">1,6 ano</p><p class="stat-card__label">a menos de estudo: 9,5 vs. 11,1 (era 2,0 em 2016)</p></div>
+      <div class="stat-card stat-card--alt"><p class="stat-card__value">13,6 p.p.</p><p class="stat-card__label">a menos na educação básica completa: 51,3% vs. 64,9%</p></div>
+      <div class="stat-card"><p class="stat-card__value">38,1% → 51,3%</p><p class="stat-card__label">pretos ou pardos com educação básica completa, 2016 → 2025</p></div>
+    </div>
+
+    <div class="chart-pair reveal">
+      <div class="chart-frame">
+        <p class="chart-frame__title">Gráfico 3a — Média de anos de estudo, 25+</p>
+        <div id="plotAnosEstudo" class="h-330"></div>
+        <p class="chart-frame__caption" id="cap-anos">Diferença: 2,0 anos (2016) → 1,6 ano (2025).</p>
+      <div class="plain"><span class="plain__tag">Em palavras simples</span><p>Brancos de 25 anos ou mais estudaram, em média, 1,6 ano a mais que pretos ou pardos. Em 2016, essa diferença era de 2,0 anos.</p></div>
+        <p class="chart-frame__source">Fonte: Elaborada pelos autores com base nos dados do IBGE (2026).</p>
+        <div class="data-slot" data-slot="anos"></div>
+      </div>
+      <div class="chart-frame">
+        <p class="chart-frame__title">Gráfico 3b — Educação básica completa, 25+ (%)</p>
+        <div id="plotBasica" class="h-330"></div>
+        <p class="chart-frame__caption" id="cap-basica">Diferença em 2025: 13,6 p.p. (era 16,4 p.p. em 2016).</p>
+      <div class="plain"><span class="plain__tag">Em palavras simples</span><p>Só 51,3 em cada 100 adultos pretos ou pardos completaram a educação básica, contra 64,9 em cada 100 brancos. Em 2016, entre pretos ou pardos, eram 38,1.</p></div>
+        <p class="chart-frame__source">Fonte: Elaborada pelos autores com base nos dados do IBGE (2026).</p>
+        <div class="data-slot" data-slot="basica"></div>
+      </div>
+    </div>
+    <p class="body-text reveal"><strong>Interpretação.</strong> A proporção que concluiu ao menos a educação básica obrigatória (ensino médio) foi de 64,9% entre brancos e 51,3% entre pretos ou pardos: 13,6 p.p. de diferença, contra 16,4 p.p. em 2016. É a primeira vez, desde 2016, que mais da metade da população preta ou parda de 25 anos ou mais completou a educação básica (em 2016 eram 38,1%). O avanço é real, mas a diferença ainda é grande e caiu menos de 3 p.p. em nove anos (IBGE, 2026).</p>
+
+    <!-- 5.2 ensino médio -->
+    <p class="eyebrow eyebrow--sub reveal" style="margin-top:var(--space-xl)">05.2 — Ensino médio (15 a 17 anos)</p>
+    <h3 class="subsection-title reveal">O indicador em que a desigualdade mais caiu</h3>
+    <p class="lede reveal">Esse indicador mede a proporção de jovens de 15 a 17 anos que estão no ensino médio ou já o concluíram. Entre os pretos ou pardos, subiu de 63,1% (2016) para 77,8% (2025), avanço de 14,7 p.p., maior que o dos brancos (de 76,1% para 84,9%, +8,8 p.p.).</p>
+    <div class="stat-grid stat-grid--2 reveal">
+      <div class="stat-card"><p class="stat-card__value">+14,7 p.p.</p><p class="stat-card__label">avanço de pretos ou pardos (brancos: +8,8)</p></div>
+      <div class="stat-card stat-card--alt"><p class="stat-card__value">13,0 → 7,1</p><p class="stat-card__label">diferença entre os grupos (p.p.), 2016 → 2025</p></div>
+    </div>
+    <div class="chart-frame reveal">
+      <p class="chart-frame__title">Gráfico 4 — Frequência escolar líquida no ensino médio, 15 a 17 anos (%)</p>
+      <div class="chart-controls" role="group" aria-label="Visualização do gráfico 4">
+        <button class="mode-btn is-active" data-chart="medio" data-mode="taxa" aria-pressed="true">Taxas</button>
+        <button class="mode-btn" data-chart="medio" data-mode="dif" aria-pressed="false">Diferença (p.p.)</button>
+      </div>
+      <div id="plotMedio" class="h-340"></div>
+      <p class="chart-frame__caption" id="cap-medio"></p>
+      <div class="plain"><span class="plain__tag">Em palavras simples</span><p>De cada 100 jovens de 15 a 17 anos, 77,8 pretos ou pardos estão no ensino médio (ou já o concluíram), contra 84,9 brancos. Em 2016 eram 63,1 e 76,1: a distância caiu quase pela metade (13,0 → 7,1 p.p.).</p></div>
+      <p class="chart-frame__source">Fonte: Elaborada pelos autores com base nos dados do IBGE (2026).</p>
+      <div class="data-slot" data-slot="medio"></div>
+    </div>
+    <p class="body-text reveal"><strong>Interpretação.</strong> Como resultado, a diferença caiu de 13,0 p.p. para 7,1 p.p. É o indicador em que a redução da desigualdade foi mais nítida. Ainda assim, 22,2% dos jovens pretos ou pardos dessa idade não estão na etapa adequada, contra 15,1% dos brancos.</p>
+
+    <!-- 5.3 jovens 18–24 -->
+    <p class="eyebrow eyebrow--sub reveal" style="margin-top:var(--space-xl)">05.3 — Jovens de 18 a 24 anos</p>
+    <h3 class="subsection-title reveal">Acesso ao ensino superior</h3>
+    <p class="lede reveal">A idade de 18 a 24 anos é aquela em que, idealmente, o jovem estaria no ensino superior. Entre os brancos, 33,4% estão na etapa adequada para a idade; entre os pretos ou pardos, 18,9%. A taxa de escolarização é de 38,8% para brancos e 26,9% para pretos ou pardos.</p>
+    <div class="stat-grid reveal">
+      <div class="stat-card"><p class="stat-card__value">6,2% × 3,0%</p><p class="stat-card__label">já concluíram a graduação (razão 2,07)</p></div>
+      <div class="stat-card stat-card--alt"><p class="stat-card__value">70,1% × 55,0%</p><p class="stat-card__label">fora da escola sem concluir a etapa esperada (diferença de 15,1 p.p.)</p></div>
+      <div class="stat-card"><p class="stat-card__value">38,8% × 26,9%</p><p class="stat-card__label">taxa de escolarização de brancos e de pretos ou pardos</p></div>
+    </div>
+    <div class="chart-frame reveal">
+      <p class="chart-frame__title">Gráfico 5 — Jovens de 18 a 24 anos por situação escolar (%), 2025</p>
+      <div class="chart-controls" role="group" aria-label="Visualização do gráfico 5">
+        <button class="mode-btn is-active" data-chart="jovens" data-mode="barras" aria-pressed="true">Barras empilhadas</button>
+        <button class="mode-btn" data-chart="jovens" data-mode="roscas" aria-pressed="false">Roscas</button>
+      </div>
+      <div class="chart-frame__hint">clique na legenda para ocultar categorias · passe o cursor para ver os valores</div>
+      <div id="plotJovens" class="h-360"></div>
+      <p class="chart-frame__caption" id="cap-jovens">Cada grupo soma 100%.</p>
+      <div class="plain"><span class="plain__tag">Em palavras simples</span><p>Entre jovens de 18 a 24 anos, 70,1 em cada 100 pretos ou pardos estão fora da escola sem ter concluído a etapa esperada; entre brancos, são 55,0. Só 3,0 em cada 100 pretos ou pardos já concluíram a graduação, contra 6,2 brancos.</p></div>
+      <p class="chart-frame__source">Fonte: Elaborada pelos autores com base nos dados do IBGE (2026).</p>
+      <div class="data-slot" data-slot="jovens"></div>
+    </div>
+    <p class="body-text reveal"><strong>Interpretação.</strong> A categoria mais crítica é a dos jovens que não frequentam a escola e não concluíram a etapa esperada: 70,1% entre pretos ou pardos e 55,0% entre brancos (diferença de 15,1 p.p.). Além disso, 6,2% dos jovens brancos já concluíram a graduação, mais que o dobro dos 3,0% de pretos ou pardos (razão de 2,07).</p>
+  </div>
+</section>
+
+<!-- ══════════════════════ 06 ABANDONO ══════════════════════ -->
+<section id="abandono" class="section section--alt">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="phase-tag">Fase 3 · Análise dos Dados</span>
+      <p class="eyebrow">06 — Abandono escolar</p>
+      <h2 class="section-title">Quem sai da escola<br>sem o ensino médio?</h2>
+    </div>
+    <p class="lede reveal">Em 2025, 7,7 milhões de jovens de 14 a 29 anos não tinham concluído o ensino médio e estavam fora da escola. Desses, 72,8% (5,6 milhões) eram pretos ou pardos e 26,4% (2,0 milhões) eram brancos (IBGE, 2026).</p>
+
+    <div class="stat-grid stat-grid--4 reveal">
+      <div class="stat-card"><p class="stat-card__value">7,7 mi</p><p class="stat-card__label">jovens de 14 a 29 anos sem ensino médio e fora da escola</p></div>
+      <div class="stat-card stat-card--alt"><p class="stat-card__value">5,6 mi</p><p class="stat-card__label">são pretos ou pardos (72,8%)</p></div>
+      <div class="stat-card"><p class="stat-card__value">2,0 mi</p><p class="stat-card__label">são brancos (26,4%)</p></div>
+      <div class="stat-card stat-card--alt"><p class="stat-card__value">43,0%</p><p class="stat-card__label">citam precisar trabalhar como principal motivo</p></div>
+    </div>
+
+    <div class="chart-frame reveal">
+      <p class="chart-frame__title">Gráfico 6 — Participação de cada grupo na população e entre jovens sem ensino médio fora da escola (%)</p>
+      <div class="chart-frame__hint">passe o cursor sobre as colunas · clique na legenda para ocultar um grupo</div>
+      <div id="plotAbandono" class="h-360"></div>
+      <p class="chart-frame__caption" id="cap-abandono">Pretos e pardos: 55,5% da população e 72,8% do grupo em abandono — cerca de 1,3 vez o seu peso populacional.</p>
+      <div class="plain"><span class="plain__tag">Em palavras simples</span><p>Pretos e pardos são 55,5 em cada 100 brasileiros, mas 72,8 em cada 100 jovens que saíram da escola sem terminar o ensino médio. Eles aparecem mais do que o esperado pelo seu peso na população.</p></div>
+      <p class="chart-frame__source">Fonte: Elaborada pelos autores com base nos dados do IBGE (2023; 2026).</p>
+      <div class="data-slot" data-slot="abandono"></div>
+    </div>
+    <p class="body-text reveal"><strong>Interpretação.</strong> Como pretos e pardos são 55,5% da população total (IBGE, 2023), eles aparecem sobrerrepresentados nesse grupo, cerca de 1,3 vez o seu peso populacional. Essa comparação tem limite: o Censo se refere a todas as idades, e a população parda é mais numerosa entre os mais jovens, o que explica parte da diferença. Mesmo assim, o resultado confirma que o abandono escolar atinge mais a população negra.</p>
+
+    <p class="body-text reveal">O principal motivo do abandono, entre os jovens de 14 a 29 anos, foi a necessidade de trabalhar (43,0%) (IBGE, 2026). Entre os jovens de 15 a 29 anos, 19,8% dos pretos ou pardos não estudavam nem estavam ocupados, contra 14,0% dos brancos, e 19,7% dos brancos conciliavam estudo e trabalho, contra 14,7% dos pretos ou pardos.</p>
+    <div class="chart-frame reveal">
+      <p class="chart-frame__title">Gráfico 7 — Condição de estudo e ocupação, jovens de 15 a 29 anos (%)</p>
+      <div id="plotCondicao" class="h-330"></div>
+      <p class="chart-frame__caption" id="cap-condicao">Nem estudam nem estão ocupados: 19,8% (pretos ou pardos) vs. 14,0% (brancos).</p>
+      <div class="plain"><span class="plain__tag">Em palavras simples</span><p>Entre jovens de 15 a 29 anos, 19,8% dos pretos ou pardos nem estudavam nem estavam ocupados, contra 14,0% dos brancos. Já conciliar estudo e trabalho era mais comum entre brancos (19,7%) do que entre pretos ou pardos (14,7%).</p></div>
+      <p class="chart-frame__source">Fonte: Elaborada pelos autores com base nos dados do IBGE (2026).</p>
+      <div class="data-slot" data-slot="condicao"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ 07 MEDIDAS ══════════════════════ -->
+<section id="medidas" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="phase-tag">Fase 3 · Análise dos Dados</span>
+      <p class="eyebrow">07 — Medidas de tendência central e de dispersão</p>
+      <h2 class="section-title">Médias, variâncias e desvios<br>das séries 2016–2025.</h2>
+    </div>
+    <p class="lede reveal">A tabela abaixo resume as séries de 2016, 2019, 2022, 2024 e 2025 (cinco observações por série). A variância e o desvio-padrão são amostrais. Como os valores não se repetem, as séries são amodais (não têm moda).</p>
+
+    <div class="plain plain--block reveal"><span class="plain__tag">Em palavras simples</span><p><strong>Média</strong> é o valor típico da série; <strong>mediana</strong>, o valor do meio; <strong>amplitude</strong>, a distância entre o maior e o menor valor; <strong>desvio-padrão</strong>, o quanto os valores costumam se afastar da média; <strong>CV</strong>, esse afastamento em relação à média (quanto menor, mais estável a série). <strong>Moda</strong> é o valor que mais se repete — aqui nenhum se repete, então as séries são amodais.</p></div>
+
+    <div class="summary-grid reveal">
+      <div class="summary-card"><p class="summary-card__label">Média</p><span id="eq-media"></span></div>
+      <div class="summary-card"><p class="summary-card__label">Variância amostral</p><span id="eq-var"></span></div>
+      <div class="summary-card"><p class="summary-card__label">Desvio-padrão e CV</p><span id="eq-dp"></span></div>
+      <div class="summary-card"><p class="summary-card__label">Diferença (p.p.) e razão</p><span id="eq-dif"></span></div>
+    </div>
+
+    <p class="eyebrow reveal" style="margin-top:var(--space-lg)">Tabela 1 — Medidas descritivas das séries 2016–2025</p>
+    <div class="table-wrap reveal">
+      <table class="data-table data-table--select" id="tblMedidas">
+        <thead><tr><th>Série (%)</th><th>Média</th><th>Mediana</th><th>Moda</th><th>Amplitude</th><th>Variância</th><th>Desvio-padrão</th><th>CV</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="chart-frame__source reveal" style="border:0;padding-left:0">Fonte: Elaborada pelos autores com base nos dados do IBGE (2026). Clique em uma linha para ver a série no gráfico abaixo.</p>
+
+    <div class="chart-frame reveal">
+      <p class="chart-frame__title" id="ttlMedida">Série selecionada</p>
+      <div id="plotMedida" class="h-340"></div>
+      <p class="chart-frame__caption" id="cap-medida"></p>
+      <div class="plain"><span class="plain__tag">Em palavras simples</span><p>A linha tracejada é a média da série; a faixa colorida mostra onde os valores costumam ficar (média ± 1 desvio-padrão).</p></div>
+      <p class="chart-frame__source">Fonte: Elaborada pelos autores com base nos dados do IBGE (2026). Faixa = média ± 1 desvio-padrão (amostral).</p>
+    </div>
+
+    <div class="chart-frame chart-frame--flush reveal">
+      <p class="chart-frame__title">Distribuição das cinco observações de cada série (boxplot, com média e desvio-padrão)</p>
+      <div class="chart-triple">
+        <div id="plotBox1" class="h-330"></div>
+        <div id="plotBox2" class="h-330"></div>
+        <div id="plotBox3" class="h-330"></div>
+      </div>
+      <p class="chart-frame__caption">Pontos ao lado = as 5 observações (2016, 2019, 2022, 2024, 2025); caixa = quartis (método linear do Plotly); linha cheia = mediana; linha tracejada = média. O desvio-padrão de cada série está na Tabela 1 e no gráfico da série selecionada.</p>
+      <div class="plain"><span class="plain__tag">Em palavras simples</span><p>Cada ponto é um ano. Quanto mais espalhados os pontos (e mais alta a caixa), mais a taxa mudou entre 2016 e 2025. As séries de pretos ou pardos se espalham mais porque mudaram mais rápido.</p></div>
+      <p class="chart-frame__source">Fonte: Elaborada pelos autores com base nos dados do IBGE (2026).</p>
+    </div>
+
+    <p class="body-text reveal"><strong>Interpretação.</strong> (i) A média da taxa de analfabetismo dos pretos ou pardos (7,66%) é mais que o dobro da dos brancos (3,28%), o que confirma a diferença estrutural. (ii) A mediana é próxima da média em quase todas as séries, o que indica distribuição sem valores extremos. (iii) A amplitude mostra quanto cada grupo mudou em nove anos: 10,1 p.p. no analfabetismo de idosos pretos ou pardos (de 30,7% para 20,6%) e 4,4 p.p. entre os brancos; no ensino médio, 14,7 p.p. entre pretos ou pardos e 8,8 p.p. entre brancos. O desvio-padrão maior da série de pretos ou pardos (5,80 p.p. no ensino médio, contra 3,24 p.p. dos brancos) reflete essa mudança mais rápida, ou seja, os pretos e pardos estão alcançando os brancos, mas partiram de um patamar muito mais baixo. (iv) O CV (desvio-padrão em relação à média) é baixo (4% a 18%), então as séries variam de forma gradual, sem oscilações bruscas.</p>
+    <p class="note-faint reveal"><strong>Atenção:</strong> essas medidas descrevem a evolução no tempo (pontos desigualmente espaçados), e não a variabilidade entre pessoas.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════ 08 SÍNTESE ══════════════════════ -->
+<section id="sintese" class="section section--alt">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="phase-tag">Fase 3 · Análise dos Dados</span>
+      <p class="eyebrow">08 — Síntese das diferenças (2025)</p>
+      <h2 class="section-title">Em todos os indicadores,<br>pretos e pardos estão atrás.</h2>
+    </div>
+    <p class="lede reveal">A tabela reúne os indicadores de 2025 com a diferença e a razão entre os grupos; o gráfico compara o tamanho das diferenças medidas em pontos percentuais.</p>
+
+    <div class="table-wrap reveal">
+      <table class="data-table" id="tblSintese">
+        <thead><tr><th>Indicador</th><th>Branca</th><th>Preta ou parda</th><th>Diferença</th><th>Razão</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="chart-frame__source reveal" style="border:0;padding-left:0">Fonte: Elaborada pelos autores com base nos dados do IBGE (2026).</p>
+
+    <div class="chart-frame reveal">
+      <p class="chart-frame__title">Gráfico 8 — Diferença entre brancos e pretos ou pardos em 2025 (p.p.)</p>
+      <div class="chart-frame__hint">passe o cursor para ver os dois valores comparados</div>
+      <div id="plotGap" class="h-380"></div>
+      <p class="chart-frame__caption">Anos de estudo (diferença de 1,6 ano) não entra no gráfico por estar em outra unidade.</p>
+      <div class="plain"><span class="plain__tag">Em palavras simples</span><p>Quanto maior a barra, maior a distância entre brancos e pretos ou pardos. A maior diferença é a de jovens fora da escola sem concluir a etapa (15,1 p.p.); a menor, a da graduação concluída (3,2 p.p.).</p></div>
+      <p class="chart-frame__source">Fonte: Elaborada pelos autores com base nos dados do IBGE (2026).</p>
+      <div class="data-slot" data-slot="gap"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ 09 QUALIDADE ══════════════════════ -->
+<section id="qualidade" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="phase-tag">Fase 3 · Análise dos Dados</span>
+      <p class="eyebrow">09 — Qualidade e confiabilidade das fontes</p>
+      <h2 class="section-title">O que os dados permitem afirmar<br>e onde estão seus limites.</h2>
+    </div>
+    <p class="lede reveal">O IBGE é o órgão oficial de estatística do país, e a PNAD Contínua utiliza amostragem probabilística e metodologia documentada, com indicação de significância estatística (95%) nas comparações do Informativo. Isso dá alta confiabilidade aos dados.</p>
+
+    <div class="summary-grid reveal">
+      <div class="summary-card summary-card--wide summary-card--accent">
+        <p class="summary-card__label">Pontos fortes</p>
+        <p>Amostragem probabilística e metodologia documentada; séries comparáveis, reponderadas com o Censo 2022; números conferidos em reportagens, que coincidiram com os valores do IBGE.</p>
+      </div>
+      <div class="summary-card"><p class="summary-card__label">(a) Estimativas amostrais</p><p>São estimativas amostrais e, portanto, têm margem de erro.</p></div>
+      <div class="summary-card"><p class="summary-card__label">(b) Cor ou raça autodeclarada</p><p>Pode mudar ao longo do tempo, pois a identificação de pardos e pretos varia com o contexto social (IBGE, 2023).</p></div>
+      <div class="summary-card"><p class="summary-card__label">(c) Reponderação</p><p>A reponderação com o Censo 2022 altera valores de anos anteriores.</p></div>
+      <div class="summary-card"><p class="summary-card__label">(d) Matérias jornalísticas</p><p>Foram usadas somente para conferência e coincidiram com os valores do IBGE.</p></div>
+    </div>
+    <p class="note-faint reveal">Como o Informativo do IBGE apresenta alguns trechos de texto com números diferentes dos das tabelas (por exemplo, nas taxas regionais), adotamos sempre os valores das tabelas e das análises por cor ou raça. Generalização: os resultados valem para o Brasil, não para uma escola ou cidade específica.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════ 10 CONCLUSÕES ══════════════════════ -->
+<section id="conclusoes" class="section section--alt">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="phase-tag">Fase 4 · Conclusões e Reflexão Crítica</span>
+      <p class="eyebrow">10 — Conclusões e reflexão crítica</p>
+      <h2 class="section-title">A distância diminui,<br>mas não desaparece.</h2>
+    </div>
+
+    <p class="eyebrow eyebrow--sub reveal">Resposta à pergunta de pesquisa</p>
+    <p class="lede reveal">Os dados confirmam a hipótese. Em 2025, pessoas pretas ou pardas apresentaram resultados educacionais piores que os de pessoas brancas em todos os indicadores analisados.</p>
+    <div class="steps reveal">
+      <div class="step"><span class="step__num">2,3×</span><div class="step__content">taxa de analfabetismo 2,3 vezes maior</div></div>
+      <div class="step"><span class="step__num">1,6 ano</span><div class="step__content">a menos de estudo</div></div>
+      <div class="step"><span class="step__num">13,6 p.p.</span><div class="step__content">a menos de conclusão da educação básica</div></div>
+      <div class="step"><span class="step__num">7,1 p.p.</span><div class="step__content">a menos de frequência adequada ao ensino médio</div></div>
+      <div class="step step--result"><span class="step__num">½</span><div class="step__content">metade da taxa de conclusão da graduação entre jovens de 18 a 24 anos (3,0% vs. 6,2%)</div></div>
+    </div>
+    <p class="body-text reveal">Desde 2016 houve progresso: as diferenças absolutas diminuíram em todos os indicadores, e o avanço no ensino médio foi o maior (de 13,0 para 7,1 p.p.). No entanto, a razão relativa do analfabetismo praticamente não se alterou, e o abandono escolar continua concentrado na população negra (72,8% dos jovens de 14 a 29 anos sem ensino médio e fora da escola).</p>
+
+    <p class="eyebrow eyebrow--sub reveal" style="margin-top:var(--space-lg)">Relação com o ODS 18 e implicações sociais</p>
+    <p class="body-text reveal">O ODS 18 propõe reduzir as desigualdades étnico-raciais até 2030. Os resultados mostram que o caminho existe, pois a lacuna vem diminuindo, mas é lento: em nove anos a diferença na conclusão da educação básica caiu menos de 3 p.p. Se o ritmo continuar o mesmo, a igualdade não será alcançada na década. As implicações são sociais: menor escolaridade limita o acesso ao ensino superior, ao emprego qualificado e à renda, o que reproduz a desigualdade entre gerações. Isso mostra que dados desagregados por cor ou raça são necessários para orientar políticas públicas e acompanhar as metas do ODS 18.</p>
+
+    <p class="eyebrow eyebrow--sub reveal" style="margin-top:var(--space-lg)">Limitações e interpretações alternativas</p>
+    <div class="glossary reveal">
+      <div class="glossary__item">
+        <span class="glossary__tag">≠</span>
+        <div class="glossary__content"><h3>Correlação não é causalidade</h3><p>Os dados mostram diferenças entre grupos, mas não provam suas causas. Renda, região de moradia, qualidade da escola e idade também influenciam os resultados e não foram controlados.</p></div>
+      </div>
+      <div class="glossary__item">
+        <span class="glossary__tag glossary__tag--b">Σ</span>
+        <div class="glossary__content"><h3>Agregação</h3><p>Pretos e pardos aparecem juntos, o que oculta possíveis diferenças entre os dois grupos. Indígenas e amarelos não foram analisados, embora o ODS 18 também os inclua.</p></div>
+      </div>
+      <div class="glossary__item">
+        <span class="glossary__tag glossary__tag--c">id</span>
+        <div class="glossary__content"><h3>Composição por idade e região</h3><p>Parte da diferença nos indicadores de 25 anos ou mais vem de gerações antigas, que tiveram menos acesso à escola. Além disso, a população preta e parda está concentrada em regiões com menores taxas de escolaridade (como o Nordeste, onde está 57,4% dos analfabetos do país). Isso pode ser lido como desigualdade regional e racial ao mesmo tempo, e ambas estão ligadas.</p></div>
+      </div>
+      <div class="glossary__item">
+        <span class="glossary__tag glossary__tag--d">n=5</span>
+        <div class="glossary__content"><h3>Margem de erro e série</h3><p>Os dados são amostrais, a série tem lacunas (2020 e 2021), e as medidas estatísticas foram calculadas com apenas cinco pontos no tempo, o que limita generalizações.</p></div>
+      </div>
+      <div class="glossary__item">
+        <span class="glossary__tag">↔</span>
+        <div class="glossary__content"><h3>Interpretação alternativa</h3><p>Parte da redução das diferenças pode refletir mudanças na autodeclaração (mais pessoas se declaram pretas ou pardas), e não apenas melhorias educacionais.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ 11 INTERVENÇÃO ══════════════════════ -->
+<section id="intervencao" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="phase-tag">Fase 4 · Conclusões e Reflexão Crítica</span>
+      <p class="eyebrow">11 — Proposta de intervenção</p>
+      <h2 class="section-title">Ações para a escola<br>e a comunidade.</h2>
+    </div>
+    <p class="lede reveal">Com base nos dados, o grupo propõe cinco ações para a escola e a comunidade. Abra cada cartão para ver o dado que a fundamenta.</p>
+
+    <div class="apps-grid reveal">
+      <div class="app-card" data-detail="monitorar" role="button" tabindex="0" aria-label="Ver detalhes: Monitorar a permanência">
+        <div class="app-card__icon-wrap">
+          <svg class="app-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="21" cy="21" r="11"/><path d="M29 29l11 11"/><path d="M15 22l4 4 8-9"/></svg>
+        </div>
+        <h3>Monitorar a permanência</h3>
+        <p>Acompanhar frequência, reprovação e evasão por cor ou raça (autodeclarada), de forma agregada e sigilosa, com busca ativa de estudantes em risco.</p>
+        <span class="app-card__cta">Explorar →</span>
+      </div>
+      <div class="app-card" data-detail="permanencia" role="button" tabindex="0" aria-label="Ver detalhes: Apoio à permanência">
+        <div class="app-card__icon-wrap">
+          <svg class="app-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="8" y="14" width="32" height="22" rx="3"/><circle cx="24" cy="25" r="5"/><path d="M12 14V10h24v4"/></svg>
+        </div>
+        <h3>Apoio à permanência no ensino médio</h3>
+        <p>Divulgar e orientar o acesso a incentivos financeiros à permanência, estágios e programas de aprendizagem compatíveis com os estudos.</p>
+        <span class="app-card__cta">Explorar →</span>
+      </div>
+      <div class="app-card" data-detail="superior" role="button" tabindex="0" aria-label="Ver detalhes: Preparação para o ensino superior">
+        <div class="app-card__icon-wrap">
+          <svg class="app-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 18l20-9 20 9-20 9z"/><path d="M12 22v10c0 3 6 6 12 6s12-3 12-6V22"/><path d="M44 18v12"/></svg>
+        </div>
+        <h3>Preparação para o ensino superior</h3>
+        <p>Grupos de estudo para o ENEM, orientação sobre a Lei de Cotas e visitas a universidades, com ex-alunos como mentores.</p>
+        <span class="app-card__cta">Explorar →</span>
+      </div>
+      <div class="app-card" data-detail="antirracista" role="button" tabindex="0" aria-label="Ver detalhes: Educação antirracista">
+        <div class="app-card__icon-wrap">
+          <svg class="app-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 10h14c3 0 4 1 4 4v24c0-3-1-4-4-4H6z"/><path d="M42 10H28c-3 0-4 1-4 4v24c0-3 1-4 4-4h14z"/></svg>
+        </div>
+        <h3>Educação antirracista</h3>
+        <p>Fortalecer o cumprimento da Lei nº 10.639/2003 nos currículos, com projetos interdisciplinares que usem dados estatísticos.</p>
+        <span class="app-card__cta">Explorar →</span>
+      </div>
+      <div class="app-card" data-detail="divulgacao" role="button" tabindex="0" aria-label="Ver detalhes: Divulgação dos dados">
+        <div class="app-card__icon-wrap">
+          <svg class="app-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 20v8h8l12 9V11L14 20z"/><path d="M32 18c3 3 3 9 0 12M37 13c6 6 6 16 0 22"/></svg>
+        </div>
+        <h3>Divulgação dos dados</h3>
+        <p>Apresentar os resultados à comunidade escolar (feira de ciências, mural, rede social da escola) para ampliar o debate sobre o ODS 18.</p>
+        <span class="app-card__cta">Explorar →</span>
+      </div>
+    </div>
+    <p class="note-faint reveal" style="margin-top:var(--space-md)">Essas propostas são recomendações fundamentadas nos dados analisados; seu efeito real dependeria de avaliação posterior pela escola.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════ 12 REFERÊNCIAS ══════════════════════ -->
+<section id="referencias" class="section section--alt">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="phase-tag">Fase 5 · Referências e organização</span>
+      <p class="eyebrow">12 — Referências</p>
+      <h2 class="section-title">Referências utilizadas<br>neste trabalho.</h2>
+    </div>
+    <ul class="refs reveal">
+      <li>AGÊNCIA GOV. <strong>Brasil registra a menor taxa de analfabetismo desde 2016.</strong> Brasília, DF: Agência Gov/EBC, jun. 2026. Disponível em: <a href="https://agenciagov.ebc.com.br/noticias/202606/brasil-atinge-a-menor-taxa-de-analfabetismo-desde-2016" target="_blank" rel="noopener">https://agenciagov.ebc.com.br/noticias/202606/brasil-atinge-a-menor-taxa-de-analfabetismo-desde-2016</a>. Acesso em: 22 out. 2026.</li>
+      <li>ALMEIDA, Silvio Luiz de. <strong>Racismo estrutural.</strong> São Paulo: Pólen, 2019. (Coleção Feminismos Plurais).</li>
+      <li>BRASIL. <strong>Lei nº 10.639, de 9 de janeiro de 2003.</strong> Altera a Lei nº 9.394/1996 para incluir no currículo oficial a temática "História e Cultura Afro-Brasileira". Diário Oficial da União, Brasília, DF, 2003. Disponível em: <a href="http://www.planalto.gov.br/ccivil_03/leis/2003/l10.639.htm" target="_blank" rel="noopener">http://www.planalto.gov.br/ccivil_03/leis/2003/l10.639.htm</a>. Acesso em: 22 out. 2026.</li>
+      <li>BRASIL. <strong>Lei nº 12.711, de 29 de agosto de 2012.</strong> Dispõe sobre o ingresso nas universidades federais e nas instituições federais de ensino técnico de nível médio. Diário Oficial da União, Brasília, DF, 2012. Disponível em: <a href="http://www.planalto.gov.br/ccivil_03/_ato2011-2014/2012/lei/l12711.htm" target="_blank" rel="noopener">http://www.planalto.gov.br/ccivil_03/_ato2011-2014/2012/lei/l12711.htm</a>. Acesso em: 22 out. 2026.</li>
+      <li>BRASIL. <strong>Lei nº 14.723, de 13 de novembro de 2023.</strong> Altera a Lei nº 12.711/2012 (Lei de Cotas). Diário Oficial da União, Brasília, DF, 2023. Disponível em: <a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14723.htm" target="_blank" rel="noopener">https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14723.htm</a>. Acesso em: 22 out. 2026.</li>
+      <li>BRASIL. Secretaria-Geral da Presidência da República. <strong>Governo federal apresenta ODS 18 sobre igualdade étnico-racial em evento na ONU.</strong> Brasília, DF, 16 jul. 2024. Disponível em: <a href="https://agenciagov.ebc.com.br/noticias/202407/governo-federal-apresenta-ods-18-sobre-igualdade-etnico-racial-em-evento-na-onu" target="_blank" rel="noopener">https://agenciagov.ebc.com.br/noticias/202407/governo-federal-apresenta-ods-18-sobre-igualdade-etnico-racial-em-evento-na-onu</a>. Acesso em: 22 out. 2026.</li>
+      <li>INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA (IBGE). <strong>Censo 2022: pela primeira vez, desde 1991, a maior parte da população do Brasil se declara parda.</strong> Agência de Notícias IBGE, Rio de Janeiro, 22 dez. 2023. Disponível em: <a href="https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agenciade-noticias/noticias/38719-censo-2022-pela-primeira-vez-desde-1991a-maior-parte-da-populacao-do-brasil-se-declara-parda" target="_blank" rel="noopener">https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agenciade-noticias/noticias/38719-censo-2022-pela-primeira-vez-desde-1991a-maior-parte-da-populacao-do-brasil-se-declara-parda</a>. Acesso em: 22 out. 2026.</li>
+      <li>INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA (IBGE). <strong>Painel Cor ou Raça.</strong> Rio de Janeiro: IBGE, 2024. Disponível em: <a href="https://www.ibge.gov.br/painel-cor-ou-raca/" target="_blank" rel="noopener">https://www.ibge.gov.br/painel-cor-ou-raca/</a>. Acesso em: 22 out. 2026.</li>
+      <li>INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA (IBGE). <strong>Pesquisa Nacional por Amostra de Domicílios Contínua: Educação 2025.</strong> Rio de Janeiro: IBGE, 2026. Informativo. Disponível em: <a href="https://biblioteca.ibge.gov.br/visualizacao/livros/liv102286_informativo.pdf" target="_blank" rel="noopener">https://biblioteca.ibge.gov.br/visualizacao/livros/liv102286_informativo.pdf</a>. Acesso em: 22 out. 2026.</li>
+      <li>JEDUCA. <strong>Pnad Educação 2025: dados ampliam olhar sobre desafios históricos da educação.</strong> São Paulo: Jeduca, 2026. Disponível em: <a href="https://jeduca.org.br/noticia/pnad-educacao-2025-dados-ampliam-olhar-sobre-desafios-historicos-da-educacao" target="_blank" rel="noopener">https://jeduca.org.br/noticia/pnad-educacao-2025-dados-ampliam-olhar-sobre-desafios-historicos-da-educacao</a>. Acesso em: 22 out. 2026.</li>
+      <li>PROGRAMA DAS NAÇÕES UNIDAS PARA O DESENVOLVIMENTO (PNUD). <strong>ODS 18: marca escolhida enfatiza jornada coletiva da luta pela igualdade étnico-racial.</strong> Brasília, DF: PNUD, [s.d.]. Disponível em: <a href="https://www.undp.org/pt/brazil/news/ods-18-marca-escolhida-enfatiza-jornada-coletiva-da-luta-pela-igualdade-etnico-racial" target="_blank" rel="noopener">https://www.undp.org/pt/brazil/news/ods-18-marca-escolhida-enfatiza-jornada-coletiva-da-luta-pela-igualdade-etnico-racial</a>. Acesso em: 22 out. 2026.</li>
+    </ul>
+
+    <p class="eyebrow reveal" style="margin-top:var(--space-lg)">Registro da participação individual</p>
+    <div class="table-wrap reveal">
+      <table class="data-table">
+        <thead><tr><th>Integrante</th><th>Participação no trabalho</th></tr></thead>
+        <tbody>
+          <tr><td>[Nome 1]</td><td>[ex.: pesquisa das fontes e Introdução]</td></tr>
+          <tr><td>[Nome 2]</td><td>[ex.: organização dos dados e Plano]</td></tr>
+          <tr><td>[Nome 3]</td><td>[ex.: gráficos e tabelas]</td></tr>
+          <tr><td>[Nome 4]</td><td>[ex.: medidas estatísticas e análise]</td></tr>
+          <tr><td>[Nome 5]</td><td>[ex.: conclusões, intervenção e revisão]</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note-faint reveal">Substituir pelos nomes e pelas tarefas efetivamente realizadas por cada integrante.</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__text">
+      <p class="eyebrow">CEFET-MG · Estatística · Professores Erica e Luiz Gustavo</p>
+      <p class="footer__title">Estatística para compreender a realidade</p>
+      <p class="footer__sub">Educação e relações étnico-raciais (ODS 18) — Belo Horizonte, 2026.</p>
+    </div>
+    <figure class="footer__credit">
+      <img src="img/silent-hill.jpg" width="828" height="1792" loading="lazy"
+           alt="Colagem escura em tons de verde e preto, com recortes de jogos de PlayStation, mãos desenhadas, textos em japonês e inglês e um disco de Silent Hill.">
+      <figcaption>Referência visual: colagem de Silent Hill, de onde vêm a paleta, as superfícies e a tipografia do site.</figcaption>
+    </figure>
+  </div>
+</footer>
+
+<!-- ══════════════════════ PAINÉIS DE DETALHE — INTERVENÇÃO ══════════════════════ -->
+
+<div class="detail" id="detail-monitorar" role="dialog" aria-modal="true" aria-label="Monitorar a permanência">
+  <div class="detail__inner">
+    <button class="detail__back" data-close="monitorar">← voltar para a proposta</button>
+    <p class="detail__eyebrow">11 — Intervenção · Monitorar</p>
+    <h2 class="detail__title">Acompanhar quem está<br>em risco de sair da escola.</h2>
+    <p class="detail__lede">A partir do dado de que o abandono se concentra em jovens pretos e pardos, a coordenação pode acompanhar frequência, reprovação e evasão por cor ou raça (autodeclarada), usando os dados de forma agregada e sigilosa, com busca ativa de estudantes em risco.</p>
+    <div class="detail__grid">
+      <div class="detail__cell"><h4>O dado que fundamenta</h4><p>72,8% dos 7,7 milhões de jovens de 14 a 29 anos sem ensino médio e fora da escola eram pretos ou pardos, que são 55,5% da população (IBGE, 2023; 2026).</p></div>
+      <div class="detail__cell"><h4>O que acompanhar</h4><p>Frequência, reprovação e evasão por cor ou raça autodeclarada.</p></div>
+      <div class="detail__cell"><h4>Como tratar os dados</h4><p>De forma agregada e sigilosa.</p></div>
+      <div class="detail__cell"><h4>O que fazer com o resultado</h4><p>Busca ativa de estudantes em risco.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="detail" id="detail-permanencia" role="dialog" aria-modal="true" aria-label="Apoio à permanência no ensino médio">
+  <div class="detail__inner">
+    <button class="detail__back" data-close="permanencia">← voltar para a proposta</button>
+    <p class="detail__eyebrow">11 — Intervenção · Permanência</p>
+    <h2 class="detail__title">Quando trabalhar é o motivo,<br>a escola pode orientar.</h2>
+    <p class="detail__lede">Como a necessidade de trabalhar é o principal motivo do abandono (43,0%), a escola pode divulgar e orientar o acesso a programas de incentivo financeiro à permanência, estágios e programas de aprendizagem compatíveis com os estudos.</p>
+    <div class="detail__grid">
+      <div class="detail__cell"><h4>O dado que fundamenta</h4><p>Entre os jovens de 14 a 29 anos, o principal motivo do abandono foi a necessidade de trabalhar: 43,0% (IBGE, 2026).</p></div>
+      <div class="detail__cell"><h4>Contexto de 15 a 29 anos</h4><p>19,8% dos pretos ou pardos não estudavam nem estavam ocupados, contra 14,0% dos brancos; 19,7% dos brancos conciliavam estudo e trabalho, contra 14,7% dos pretos ou pardos.</p></div>
+      <div class="detail__cell"><h4>O que divulgar</h4><p>Programas de incentivo financeiro à permanência.</p></div>
+      <div class="detail__cell"><h4>Alternativas ao abandono</h4><p>Estágios e programas de aprendizagem compatíveis com os estudos.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="detail" id="detail-superior" role="dialog" aria-modal="true" aria-label="Preparação para o ensino superior">
+  <div class="detail__inner">
+    <button class="detail__back" data-close="superior">← voltar para a proposta</button>
+    <p class="detail__eyebrow">11 — Intervenção · Ensino superior</p>
+    <h2 class="detail__title">Caminho até a universidade.</h2>
+    <p class="detail__lede">Como só 3,0% dos jovens pretos ou pardos de 18 a 24 anos já concluíram a graduação, sugere-se oferecer grupos de estudo para o ENEM, orientação sobre a Lei de Cotas (Lei nº 12.711/2012) e visitas a universidades, com ex-alunos como mentores.</p>
+    <div class="detail__grid">
+      <div class="detail__cell"><h4>O dado que fundamenta</h4><p>Graduação concluída entre jovens de 18 a 24 anos: 6,2% (brancos) e 3,0% (pretos ou pardos), razão de 2,07.</p></div>
+      <div class="detail__cell"><h4>Estudo</h4><p>Grupos de estudo para o ENEM.</p></div>
+      <div class="detail__cell"><h4>Direitos</h4><p>Orientação sobre a Lei de Cotas (Lei nº 12.711/2012).</p></div>
+      <div class="detail__cell"><h4>Referências</h4><p>Visitas a universidades, com ex-alunos como mentores.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="detail" id="detail-antirracista" role="dialog" aria-modal="true" aria-label="Educação antirracista">
+  <div class="detail__inner">
+    <button class="detail__back" data-close="antirracista">← voltar para a proposta</button>
+    <p class="detail__eyebrow">11 — Intervenção · Educação antirracista</p>
+    <h2 class="detail__title">Dados estatísticos<br>a serviço do currículo.</h2>
+    <p class="detail__lede">Fortalecer o cumprimento da Lei nº 10.639/2003 nos currículos, com projetos interdisciplinares que usem dados estatísticos (como os deste trabalho) para discutir desigualdades, o que contribui para o letramento estatístico e para a consciência social.</p>
+    <div class="detail__grid">
+      <div class="detail__cell"><h4>A base legal</h4><p>A Lei nº 10.639/2003 tornou obrigatório o ensino de história e cultura afro-brasileira (BRASIL, 2003).</p></div>
+      <div class="detail__cell"><h4>O formato</h4><p>Projetos interdisciplinares que usem dados estatísticos para discutir desigualdades.</p></div>
+      <div class="detail__cell"><h4>O resultado esperado</h4><p>Contribui para o letramento estatístico e para a consciência social.</p></div>
+      <div class="detail__cell"><h4>Por que importa</h4><p>Para Almeida (2019), o racismo é estrutural: opera nas instituições e nas condições de vida, e não apenas em atitudes individuais.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="detail" id="detail-divulgacao" role="dialog" aria-modal="true" aria-label="Divulgação dos dados">
+  <div class="detail__inner">
+    <button class="detail__back" data-close="divulgacao">← voltar para a proposta</button>
+    <p class="detail__eyebrow">11 — Intervenção · Divulgação</p>
+    <h2 class="detail__title">Levar os resultados<br>à comunidade escolar.</h2>
+    <p class="detail__lede">Apresentar os resultados à comunidade escolar (feira de ciências, mural, rede social da escola) para ampliar o debate sobre o ODS 18.</p>
+    <div class="detail__grid">
+      <div class="detail__cell"><h4>Onde apresentar</h4><p>Feira de ciências, mural e rede social da escola.</p></div>
+      <div class="detail__cell"><h4>Para quê</h4><p>Ampliar o debate sobre o ODS 18 (Igualdade Étnico-Racial).</p></div>
+      <div class="detail__cell"><h4>Cuidado com a leitura</h4><p>Os resultados valem para o Brasil, não para uma escola ou cidade específica.</p></div>
+      <div class="detail__cell"><h4>Avaliação</h4><p>O efeito real das propostas dependeria de avaliação posterior pela escola.</p></div>
+    </div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
